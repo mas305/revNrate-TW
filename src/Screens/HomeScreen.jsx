@@ -73,10 +73,11 @@ export default function HomeScreen() {
       </div>
 
       {/* Category section */}
-      <div className="mx-12 h-full">
+      <div className="mx-12 h-ull">
         <Heading
           value1="Categories"
           value2="show all categories"
+          className="my-8 text-orange-500"
           to={"/categories"}
         />
 
@@ -95,22 +96,32 @@ export default function HomeScreen() {
         </div>
       </div>
 
-      <div className="mx-12 h-full">
-        <Heading value1="Brand" value2="show all Brands" to={"/categories"} />
+      {/* Brand section */}
+      {/* <div className="mx-12 h-full">
+        <Heading value1="Brand" value2="show all Brands" to={"/brands"} />
         <div className="h-full w-full grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-9 mb-60">
           {allBrands && allBrands.length > 0 ? (
             allBrands.map((brand) => (
-              <h3 key={brand.brandId}>{brand.brandName}</h3>
+              <CategoryItem
+                key={brand.brandId}
+                name={brand.brandName}
+                img={brand.logo}
+              />
             ))
           ) : (
-            <div>No Brands available</div>
+            <div>No categories available</div>
           )}
         </div>
-      </div>
+      </div> */}
 
       {/* Offers section */}
       <div className="mx-12 h-full">
-        <Heading value1="Offers" value2="show all offers" to={"/categories"} />
+        <Heading
+          value1="Offers"
+          value2="show all offers"
+          to={"/categories"}
+          className="my-8 text-orange-500"
+        />
 
         <div className="h-full w-full grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-9 mb-60">
           <OfferCard img={offer1}></OfferCard>
@@ -124,7 +135,11 @@ export default function HomeScreen() {
 
       {/* Reviews section */}
       <div className="mx-12 h-full">
-        <Heading value1="Popular Reviews" value2="show all Reviews" />
+        <Heading
+          value1="Popular Reviews"
+          value2="show all Reviews"
+          className="my-8 text-orange-500"
+        />
 
         <div className="h-full w-full grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 md:grid-cols-2  gap-9 mb-12">
           <ReviewCard />

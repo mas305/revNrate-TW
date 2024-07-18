@@ -6,10 +6,18 @@ import brand2 from "../assets/brand2.jpg";
 import brand3 from "../assets/brand3.png";
 import brand4 from "../assets/brand4.png";
 import BrnadHS from "../Componants/BrandHS";
+import useBrands from "../Context/BrandsContext";
+import { useNavigate } from "react-router-dom";
 
 function BrandBar() {
   const [isScrolling, setIsScrolling] = useState(true);
   const [direction, setDirection] = useState(-1); // -1 for left, 1 for right
+  const { allBrands, brandLoading } = useBrands();
+  const navigate = useNavigate();
+
+  if (brandLoading) {
+    return <div>Loading...</div>;
+  }
 
   useEffect(() => {
     if (!isScrolling) {
@@ -26,7 +34,7 @@ function BrandBar() {
     <motion.div
       className="flex w-full h-60 justify-start items-center py-4 rounded-2xl bg-white overflow-hidden relative cursor-pointer"
       onHoverStart={() => setIsScrolling(false)}
-      onHoverEnd={() => setIsScrolling(true)}
+      onHoverEnd={() => setIsScrolling(false)}
     >
       <motion.div
         className="flex h-full py-4 absolute gap-7"
@@ -39,18 +47,17 @@ function BrandBar() {
           duration: 15, // Adjust duration as needed
         }}
       >
-        <BrnadHS img={brand1}></BrnadHS>
-        <BrnadHS img={brand2}></BrnadHS>
-        <BrnadHS img={brand3}></BrnadHS>
-        <BrnadHS img={brand4}></BrnadHS>
-        <BrnadHS img={brand1}></BrnadHS>
-        <BrnadHS img={brand2}></BrnadHS>
-        <BrnadHS img={brand3}></BrnadHS>
-        <BrnadHS img={brand4}></BrnadHS>
-        <BrnadHS img={brand1}></BrnadHS>
-        <BrnadHS img={brand2}></BrnadHS>
-        <BrnadHS img={brand3}></BrnadHS>
-        <BrnadHS img={brand4}></BrnadHS>
+        {allBrands && allBrands.length > 0 ? (
+          allBrands.map((brand) => (
+            <BrnadHS
+              key={brand.brandId}
+              img={brand.logo}
+              onClick={() => navigate("/brand", { state: { brand } })} // pass brand data
+            ></BrnadHS>
+          ))
+        ) : (
+          <div>No categories available</div>
+        )}
       </motion.div>
     </motion.div>
   );

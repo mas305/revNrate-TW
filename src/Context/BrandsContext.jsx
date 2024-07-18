@@ -10,15 +10,15 @@ export function BrandsProvider({ children }) {
 
   useEffect(() => {
     axios({
-      headers: {
-        Authorization: `Bearer ${import.meta.env.VITE_APP_TOKEN}`,
-      },
+      // headers: {
+      //   Authorization: `Bearer ${import.meta.env.VITE_APP_TOKEN}`,
+      // }, 
       method: "get",
       url: `${import.meta.env.VITE_APP_MAIN_API_LINK}/api/brands`,
     })
       .then((response) => {
-        console.log(response.data.data);
-        setAllBrands(response.data.data);
+        // console.log(response.data.Data);
+        setAllBrands(response.data.Data);
       })
       .catch((error) => {
         console.error("Error fetching brands:", error);

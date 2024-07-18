@@ -5,7 +5,7 @@ function BrandState({ className, value }) {
   return (
     <div
       className={classNames(
-        "w-full flex justify-center text-green-600 font-bold",
+        "w-full flex text-green-600 font-bold",
         className
       )}
     >

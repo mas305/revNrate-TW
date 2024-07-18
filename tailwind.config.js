@@ -4,10 +4,10 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      height: {
+        "530px": "530px",
+      },
       backgroundImage: {
-        // homeImg: "url('/assets/home.jpg')",
-        // brand1: "url('/assets/image1.jpg')",
-        // category1: "url('/assets/category1.jpg')",
         "footer-texture": "url('/img/footer-texture.png')",
       },
       textShadow: {

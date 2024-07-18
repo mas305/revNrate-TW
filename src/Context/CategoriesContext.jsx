@@ -12,9 +12,9 @@ export function CategoriesProvider({ children }) {
 
   useEffect(() => {
     axios({
-      headers: {
-        Authorization: `Bearer ${import.meta.env.VITE_APP_TOKEN}`,
-      },
+      // headers: {
+      //   Authorization: `Bearer ${import.meta.env.VITE_APP_TOKEN}`,
+      // },
       method: "get",
       url: `${import.meta.env.VITE_APP_MAIN_API_LINK}/api/Categories`,
     })
