@@ -6,6 +6,7 @@ import BrandState from "../Componants/BrandState";
 import brand2 from "../assets/brand2.jpg";
 import Header from "../Componants/Header";
 import GoldenStar from "../assets/star.png";
+import leftArrow from "../assets/right-arrow.png";
 import Heading from "../Componants/Headnig";
 import useBrands from "../Context/BrandsContext";
 import PrimaryButton from "../Componants/PrimaryButton";
@@ -14,12 +15,15 @@ import { IoCall } from "react-icons/io5";
 import { ImLocation2 } from "react-icons/im";
 import { TbWorld } from "react-icons/tb";
 import { MdDoubleArrow } from "react-icons/md";
+import { FaArrowAltCircleRight } from "react-icons/fa";
 
 import OfferCard from "../Componants/Cards/OfferCard";
 import offer1 from "../assets/offer1.png";
 import offer2 from "../assets/offer2.png";
 import ProgressBar from "../Componants/ProgressBar";
 import ReviewCard from "../Componants/Cards/ReviewCard";
+import Rating from "../Componants/Rating";
+import Footer from "../Componants/Footer";
 
 function BrandScreen() {
   const { allBrands, brandLoading } = useBrands();
@@ -32,49 +36,61 @@ function BrandScreen() {
   }
 
   return (
-    <div>
-      <div className=" bg-slate-100 ">
+    <div className="bg-slate-100">
+      <div>
         <Header></Header>
 
-        <img className="w-full h-530px md:h-96" src={brand.photos} alt="" />
+        <img
+          className="w-full h-72  md:h-96 lg:h-530px xl:h-530px object-cover"
+          src={brand.photos}
+          alt=""
+        />
         {/* Brand Name & Logo  */}
-        <div className="w-full h-72 flex -mt-32">
-          <div className="w-1/2 h-full flex justify-start items-center pl-8  ">
+        <div className="w-full h-72 -mt-16 md:-mt-32 grid grid-cols-3 gap-4 justify-center items-center">
+          {/* col 1 */}
+          <div className="w-full h-full flex col-span-3 md:col-span-2 justify-between md:justify-start  items-center px-8  ">
             <div
-              className="lg:w-64 lg:h-64 md:w-48 md:h-48 rounded-full bg-white"
+              className="w-36 h-36 lg:w-64 lg:h-64 md:w-48 md:h-48 rounded-full bg-white"
               style={{
                 backgroundImage: `url(${brand.logo})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
               }}
             ></div>
-            <div className="mx-4 mt-10  flex flex-col">
+            <div className="flex flex-col items-start justify-center mx-4 mt-0 md:mt-10  ">
               <Heading
-                className="text-orange-500 my-3 "
+                className="text-orange-500 my-3"
                 value1={brand.brandName}
               ></Heading>
-              <div className="w-full flex ">
-                <BrandState value="open"></BrandState>
-                <div className="flex items-center">
+              <div className="w-full flex   ">
+                <BrandState className="w-full justify-start" value="open"></BrandState>
+                <div className="flex w-full items-center justify-end">
                   <p className="">4.9</p>
                   <img className="w-4 h-4" src={GoldenStar} alt="" />
                 </div>
               </div>
             </div>
           </div>
-          <div className="w-1/4"></div>
-          <div className=" flex items-center justify-center w-1/4 ">
-            <PrimaryButton className="mt-8" name="Add Review"></PrimaryButton>
+
+          {/* col 2 */}
+          <div className="flex items-center justify-center col-span-3 md:col-span-1 md:pr-12 md:pl-0 px-12   ">
+            <PrimaryButton
+              className="text-xl lg:text-2xl xl:text-2xl font-bold  md:mt-12"
+              name="Add Review"
+            ></PrimaryButton>
           </div>
         </div>
 
         {/* Content */}
-        <div className="grid grid-cols-3 mx-12 py-4 ">
+        <div className="grid grid-cols-3 mx-12 py-4 gap-x-9 mb-12 ">
           {/* col 1 : about - items..etc */}
-          <div className="grid col-span-2 md:col-span-3 grid-rows-4 gap-y-8  ">
+          <div className="grid col-span-3 xl:col-span-2 lg:col-span-2 md:col-span-3 sm:col-span-3  gap-y-8  ">
             {/* About */}
             <div className="w-full">
-              <Title className="lg:text-4xl sm:text-2xl font-bold" title="About"></Title>
+              <Title
+                className="text-xl md:text-3xl xl:text-4xl font-bold"
+                title="About"
+              ></Title>
               <hr className="h-1 my-2  bg-black" />
               <p className="lg:text-2xl sm:text-lg">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -86,47 +102,71 @@ function BrandScreen() {
             </div>
             {/* Items */}
             <div className="w-full">
-              <div className="flex items-center justify-between">
-                <Title className="text-4xl font-bold" title="Offers"></Title>
-                <div className="flex items-center text-lg underline">
-                  <a href="">View More Items</a>
+              {/* Brand Screen Heading */}
+              <div className="flex items-end justify-between">
+                <Title
+                  className="text-xl md:text-3xl xl:text-4xl font-bold"
+                  title="Offers"
+                ></Title>
+                <div className="flex items-center font-semibold text-sm lg:text-lg gap-x-1 underline cursor-pointer">
+                  <a className="" href="">
+                    View More Items
+                  </a>
                   <i>
-                    <MdDoubleArrow />{" "}
+                    <img className="w-3 " src={leftArrow} alt="" />
+                  </i>
+                </div>
+              </div>
+
+              <hr className="h-1 my-2 bg-black" />
+              <div className="grid grid-cols-1 md:grid-cols-2  gap-10 ">
+                <OfferCard img={offer1}></OfferCard>
+                <OfferCard img={offer2}></OfferCard>
+              </div>
+            </div>
+            {/* Items */}
+            <div className="w-full">
+              {/* Brand Screen Heading */}
+              <div className="flex items-end justify-between">
+                <Title
+                  className="text-xl md:text-3xl xl:text-4xl font-bold"
+                  title="Offers"
+                ></Title>
+                <div className="flex items-center font-semibold text-sm lg:text-lg gap-x-1 underline cursor-pointer">
+                  <a className="" href="">
+                    View More Offers
+                  </a>
+                  <i>
+                    <img className="w-3 " src={leftArrow} alt="" />
                   </i>
                 </div>
               </div>
               <hr className="h-1 my-2 bg-black" />
-              <div className="grid grid-cols-2  gap-10 ">
+              <div className="grid grid-cols-1 md:grid-cols-2  gap-10 ">
                 <OfferCard img={offer1}></OfferCard>
                 <OfferCard img={offer2}></OfferCard>
               </div>
             </div>
             {/* Offers */}
-            <div className="w-full">
-              <Title className="text-4xl font-bold" title="Offers"></Title>
-              <hr className="h-1 my-2 bg-black" />
-              <div className="grid grid-cols-2 gap-10 ">
-                <OfferCard img={offer1}></OfferCard>
-                <OfferCard img={offer2}></OfferCard>
-              </div>
-            </div>
-            {/* Offers */}
-            <div className="w-full">
+            {/* <div className="w-full">
               <Title className="text-4xl font-bold" title="Offers"></Title>
               <hr className="h-1 my-2 bg-black" />
               <div className="grid grid-cols-3 gap-10 ">
-                <ReviewCard></ReviewCard> 
+                <ReviewCard></ReviewCard>
                 <ReviewCard></ReviewCard>
                 <ReviewCard></ReviewCard>
               </div>
-            </div>
+            </div> */}
           </div>
 
           {/* col 2 : Info - Rating */}
-          <div className="lg:grid w-full p-2 gap-12 md:hidden">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-1 col-span-3 lg:col-span-1 xl:col-span-1  p-2 gap-12 mt-12 ">
             {/* row 1 : info */}
-            <div className="flex flex-col w-full  justify-center border-2 rounded-2xl  p-4 border-black ">
-              <Heading value1="Info"></Heading>
+            <div className="flex flex-col   justify-center border-2 rounded-2xl  p-4 border-black ">
+              <Title
+                className="text-3xl lg:text-4xl  text-orange-500 font-bold text-center"
+                title="Info"
+              ></Title>
 
               <div className="flex flex-col items-start w-full gap-20  py-10">
                 <div className="flex gap-3">
@@ -134,7 +174,7 @@ function BrandScreen() {
                     <TbWorld />
                   </i>
                   <a
-                    className="text-lg xl:text-2xl  font-semibold  underline text-slate-600 hover:text-blue-900"
+                    className="text-md xl:text-2xl  font-semibold  underline text-slate-600 hover:text-blue-900"
                     href=""
                   >
                     https://karamelsham.org
@@ -145,7 +185,7 @@ function BrandScreen() {
                     <ImLocation2 />
                   </i>
                   <a
-                    className="text-lg xl:text-2xl font-semibold  underline text-slate-600 hover:text-blue-900"
+                    className="text-md xl:text-2xl font-semibold  underline text-slate-600 hover:text-blue-900"
                     href=""
                   >
                     https://g.co/kgs/Krq42bs
@@ -156,7 +196,7 @@ function BrandScreen() {
                     <IoCall />
                   </i>
                   <a
-                    className="text-lg xl:text-2xl font-semibold  underline text-slate-600 hover:text-blue-900"
+                    className="text-md xl:text-2xl font-semibold  underline text-slate-600 hover:text-blue-900"
                     href=""
                   >
                     01018604335
@@ -166,34 +206,18 @@ function BrandScreen() {
             </div>
 
             {/* row 2 : Rating */}
-            <div className="flex flex-col  w-full  justify-center border-2 rounded-2xl  p-4 border-black gap-12">
-              <Heading value1="Rating"></Heading>
+            <div className="flex flex-col justify-center border-2 rounded-2xl  p-9 border-black gap-9 ">
+              <Title
+                className="text-3xl lg:text-4xl  text-orange-500 font-bold text-center"
+                title="Rating"
+              ></Title>
 
-              <div className="flex w-full justify-center gap-x-4 ">
-                <img className="w-12" src={GoldenStar} alt="Golden Star" />
-                <img className="w-12" src={GoldenStar} alt="Golden Star" />
-                <img className="w-12" src={GoldenStar} alt="Golden Star" />
-                <img className="w-12" src={GoldenStar} alt="Golden Star" />
-                <img className="w-12" src={GoldenStar} alt="Golden Star" />
-              </div>
-
-              <div className="flex flex-col  w-full  border-2 rounded-2xl  p-4 border-black gap-9">
-                <ProgressBar barName="Price" level="60%"></ProgressBar>
-                <ProgressBar barName="Service" level="90%"></ProgressBar>
-                <ProgressBar barName="Quality" level="20%"></ProgressBar>
-                <ProgressBar
-                  barName="Satisfaction Level"
-                  level="50%"
-                ></ProgressBar>
-              </div>
-              <PrimaryButton
-                name="Add Review"
-                className="text-2xl"
-              ></PrimaryButton>
+              <Rating></Rating>
             </div>
           </div>
         </div>
       </div>
+      <Footer></Footer>
     </div>
   );
 }
