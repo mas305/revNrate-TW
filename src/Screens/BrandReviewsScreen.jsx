@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Header from "../Componants/Header";
 import BrandState from "../Componants/BrandState";
 import Heading from "../Componants/Headnig";
@@ -29,8 +29,7 @@ import product4 from "../assets/product4.jpg";
 import offer1 from "../assets/offer1.png";
 import offer2 from "../assets/offer2.png";
 import BrandReviewCard from "../Componants/Cards/BrandReviewCard";
-
-function BrandScreen() {
+function BrandReviewsScreen() {
   const { allBrands, brandLoading } = useBrands();
 
   const location = useLocation();
@@ -39,7 +38,9 @@ function BrandScreen() {
   if (brandLoading) {
     return <div>Loading...</div>;
   }
-
+  //   if (!brand) {
+  //     return <div>No brand data available</div>;
+  // }
   return (
     <div className="bg-slate-100">
       <div>
@@ -47,7 +48,7 @@ function BrandScreen() {
 
         <img
           className="w-full h-72  md:h-96 lg:h-530px xl:h-530px object-cover"
-          src={brand.photos}
+          src={category1}
           alt=""
         />
         {/* Brand Name & Logo  */}
@@ -57,7 +58,7 @@ function BrandScreen() {
             <div
               className="w-36 h-36 lg:w-64 lg:h-64 md:w-48 md:h-48 rounded-full bg-white"
               style={{
-                backgroundImage: `url(${brand.logo})`,
+                backgroundImage: `url(${brand2})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
               }}
@@ -65,7 +66,7 @@ function BrandScreen() {
             <div className="flex flex-col items-start justify-center mx-4 mt-0 md:mt-10  ">
               <Heading
                 className="text-orange-500 my-3"
-                value1={brand.brandName}
+                value1="Karam Elsham"
               ></Heading>
               <div className="w-full flex   ">
                 <BrandState
@@ -93,22 +94,7 @@ function BrandScreen() {
         <div className="grid grid-cols-3 mx-12 py-4 gap-x-9 mb-12 ">
           {/* col 1 : about - items..etc */}
           <div className="grid col-span-3 xl:col-span-2 lg:col-span-2 md:col-span-3 sm:col-span-3  gap-y-8  ">
-            {/* About */}
-            <div className="w-full">
-              <Title
-                className="text-xl md:text-3xl xl:text-4xl font-bold"
-                title="About"
-              ></Title>
-              <hr className="h-0.5 my-2  bg-black" />
-              <p className="lg:text-2xl sm:text-lg">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Voluptatem architecto harum eveniet. Assumenda, veritatis
-                accusantium voluptatum dignissimos minus iure, quaerat
-                consequatur facere at, quidem beatae eius magni dolorem
-                asperiores aliquid.
-              </p>
-            </div>
-            {/* Products */}
+            {/* Items */}
             <div className="w-full">
               {/* Brand Screen Heading */}
               <div className="flex items-end justify-between">
@@ -116,74 +102,14 @@ function BrandScreen() {
                   className="text-xl md:text-3xl xl:text-4xl font-bold"
                   title="Products"
                 ></Title>
-                <div className="flex items-center font-semibold text-sm lg:text-lg  underline cursor-pointer">
-                  <Link
-                    to={"/brandProducts"}
-                    className="flex items-center gap-x-1"
-                  >
-                    <span className="">View More Products</span>
-                    <i>
-                      <img className="w-3 " src={leftArrow} alt="" />
-                    </i>
-                  </Link>
-                </div>
               </div>
 
               <hr className="h-0.5 my-2 bg-black" />
-              <div className="grid grid-cols-1 md:grid-cols-2   gap-10 ">
-                <ProductsCard img={product1}></ProductsCard>
-                <ProductsCard img={product2}></ProductsCard>
-              </div>
-            </div>
-            {/* Offers */}
-            <div className="w-full">
-              {/* Brand Screen Heading */}
-              <div className="flex items-end justify-between">
-                <Title
-                  className="text-xl md:text-3xl xl:text-4xl font-bold"
-                  title="Offers"
-                ></Title>
-                <div className="flex items-center font-semibold text-sm lg:text-lg  underline cursor-pointer">
-                  <Link
-                    to={"/brandOffers"}
-                    className="flex items-center gap-x-1"
-                  >
-                    <span className="">View More Offers</span>
-                    <i>
-                      <img className="w-3 " src={leftArrow} alt="" />
-                    </i>
-                  </Link>
-                </div>
-              </div>
-              <hr className="h-0.5 my-2 bg-black" />
-              <div className="grid grid-cols-1 md:grid-cols-2  gap-10 ">
-                <OfferCard img={offer1}></OfferCard>
-                <OfferCard img={offer2}></OfferCard>
-              </div>
-            </div>
-            {/* ReviewCard */}
-            <div className="w-full">
-              {/* Brand Screen Heading */}
-              <div className="flex items-end justify-between">
-                <Title
-                  className="text-xl md:text-3xl xl:text-4xl font-bold"
-                  title="Reviews"
-                ></Title>
-                <div className="flex items-center font-semibold text-sm lg:text-lg  underline cursor-pointer">
-                  <Link
-                    to={"/brandReviews"}
-                    className="flex items-center gap-x-1"
-                  >
-                    <span className="">View More Reviews</span>
-                    <i>
-                      <img className="w-3 " src={leftArrow} alt="" />
-                    </i>
-                  </Link>
-                </div>
-              </div>
-
-              <hr className="h-0.5  my-2 bg-black" />
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10 ">
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3    gap-10 ">
+                <BrandReviewCard></BrandReviewCard>
+                <BrandReviewCard></BrandReviewCard>
+                <BrandReviewCard></BrandReviewCard>
+                <BrandReviewCard></BrandReviewCard>
                 <BrandReviewCard></BrandReviewCard>
                 <BrandReviewCard></BrandReviewCard>
                 <BrandReviewCard></BrandReviewCard>
@@ -192,7 +118,7 @@ function BrandScreen() {
           </div>
 
           {/* col 2 : Info - Rating */}
-          <div className="grid sticky top-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-1 col-span-3 lg:col-span-1 xl:col-span-1 p-2 gap-12 mt-12 self-start">
+          <div className="grid sticky top-4  grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-1 col-span-3 lg:col-span-1 xl:col-span-1 p-2 gap-12 mt-12 self-start">
             {/* row 1 : info */}
             <div className="flex flex-col border-2 rounded-2xl p-4 border-black">
               <Title
@@ -254,4 +180,4 @@ function BrandScreen() {
   );
 }
 
-export default BrandScreen;
+export default BrandReviewsScreen;

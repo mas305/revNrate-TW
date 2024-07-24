@@ -8,7 +8,7 @@ import WhiteStar from "../../assets/star_white.png";
 import reviewer from "../../assets/reviwer.jpg";
 import Heading from "../Headnig";
 
-function ReviewCard() {
+function BrandReviewCard() {
   const [inView, setInView] = useState(false);
   const ref = useRef(null);
 
@@ -44,25 +44,16 @@ function ReviewCard() {
       transition={{ duration: 0.7 }}
       className="relative w-full  flex justify-center bg-orange-500 rounded-3xl"
     >
-      <div>
-        <div
-          className="absolute w-16 h-16 top-4 left-1/3 rounded-full bg-black"
-          style={{
-            backgroundImage: `url(${reviewer})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        ></div>
-        <div
-          className="absolute w-16 h-16 top-4 right-1/3 rounded-full bg-black"
-          style={{
-            backgroundImage: `url(${brand})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        ></div>
-      </div>
-      <div className="w-full flex flex-col m-6 mt-12 p-2 justify-between items-center text-center bg-slate-100 rounded-3xl gap-4 ">
+      <div
+        className="absolute w-16 h-16 top-4 rounded-full bg-black"
+        style={{
+          backgroundImage: `url(${reviewer})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      ></div>
+
+      <div className="w-full flex flex-col m-6 mt-12 p-2 justify-between items-center text-center bg-slate-100 rounded-3xl gap-4" >
         <h3 className="font-bold flex mt-7">Brand Name</h3>
         <p className="flex text-sm">
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Possimus
@@ -73,10 +64,26 @@ function ReviewCard() {
           <div className="flex gap-1">
             <p className="flex md:hidden">4</p>
             <img className="flex w-5 h-5" src={GoldenStar} alt="Golden Star" />
-            <img className="hidden md:flex w-5 h-5" src={GoldenStar} alt="Golden Star" />
-            <img className="hidden md:flex w-5 h-5" src={GoldenStar} alt="Golden Star" />
-            <img className="hidden md:flex w-5 h-5" src={WhiteStar} alt="WhiteStar" />
-            <img className="hidden md:flex w-5 h-5" src={WhiteStar} alt="WhiteStar" />
+            <img
+              className="hidden md:flex w-5 h-5"
+              src={GoldenStar}
+              alt="Golden Star"
+            />
+            <img
+              className="hidden md:flex w-5 h-5"
+              src={GoldenStar}
+              alt="Golden Star"
+            />
+            <img
+              className="hidden md:flex w-5 h-5"
+              src={WhiteStar}
+              alt="WhiteStar"
+            />
+            <img
+              className="hidden md:flex w-5 h-5"
+              src={WhiteStar}
+              alt="WhiteStar"
+            />
           </div>
         </div>
       </div>
@@ -84,4 +91,4 @@ function ReviewCard() {
   );
 }
 
-export default ReviewCard;
+export default BrandReviewCard;

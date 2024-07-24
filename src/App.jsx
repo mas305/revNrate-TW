@@ -17,6 +17,9 @@ import { Routes, Route } from "react-router-dom";
 import CategoriesScreen from "./Screens/CategoriesScreen";
 import BrandScreen from "./Screens/BrandScreen";
 import BrandsScreen from "./Screens/BrandsScreen";
+import BrandProductsScreen from "./Screens/BrandProductsScreen";
+import BrandOffersScreen from "./Screens/BrandOffersScreen";
+import BrandReviewsScreen from "./Screens/BrandReviewsScreen";
 
 function App() {
   const [allCategories, setAllCategories] = useState([]);
@@ -29,11 +32,12 @@ function App() {
         {/* <Route path="/" element={<HomeScreen />} /> */}
         <Route path="/signup" element={<SignupScreen />} />
         <Route path="/categories" element={<CategoriesScreen />} />
-        <Route path="/brand" element={<BrandScreen />} /> 
-        <Route path="/brands" element={<BrandsScreen />} /> 
+        <Route path="/brand" element={<BrandScreen />} />
+        <Route path="/brandProducts" element={<BrandProductsScreen />} />
+        <Route path="/brandOffers" element={<BrandOffersScreen />} /> 
+        <Route path="/brandReviews" element={<BrandReviewsScreen />} /> 
+        <Route path="/brands" element={<BrandsScreen />} />
       </Routes>
-
-      
     </>
   );
 }
