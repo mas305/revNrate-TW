@@ -20,6 +20,9 @@ import BrandsScreen from "./Screens/BrandsScreen";
 import BrandProductsScreen from "./Screens/BrandProductsScreen";
 import BrandOffersScreen from "./Screens/BrandOffersScreen";
 import BrandReviewsScreen from "./Screens/BrandReviewsScreen";
+import AddReviewScreen from "./Screens/AddReviewScreen";
+import SearchScreen from "./Screens/SearchScreen";
+import OneCategoryScreen from "./Screens/OneCategoryScreen";
 
 function App() {
   const [allCategories, setAllCategories] = useState([]);
@@ -33,10 +36,14 @@ function App() {
         <Route path="/signup" element={<SignupScreen />} />
         <Route path="/categories" element={<CategoriesScreen />} />
         <Route path="/brand" element={<BrandScreen />} />
+        <Route path="/brand/:brandId" element={<BrandScreen />} />
+        <Route path="/getonecategory/:categoryId" element={<OneCategoryScreen />} />
         <Route path="/brandProducts" element={<BrandProductsScreen />} />
         <Route path="/brandOffers" element={<BrandOffersScreen />} /> 
-        <Route path="/brandReviews" element={<BrandReviewsScreen />} /> 
+        <Route path="/brandReviews/:brandId" element={<BrandReviewsScreen />} /> 
         <Route path="/brands" element={<BrandsScreen />} />
+        <Route path="/addbrandreview/:brandId" element={<AddReviewScreen />} /> 
+        <Route path="/search" element={<SearchScreen />} /> 
       </Routes>
     </>
   );

@@ -1,6 +1,7 @@
 /* eslint-disable */
 
 import React, { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 
 function SearchBar() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -21,10 +22,7 @@ function SearchBar() {
   };
 
   return (
-    <form
-      className=" w-full max-w-lg "
-      onSubmit={handleSearchSubmit}
-    >
+    <form className=" w-full max-w-lg " onSubmit={handleSearchSubmit}>
       <div className="flex relative">
         <button
           id="dropdown-button"
@@ -81,27 +79,31 @@ function SearchBar() {
             placeholder="Brand,Company,Store.."
             required
           />
-          <button
-            type="submit"
-            className="absolute top-0 right-0 p-2.5 text-sm font-medium h-full text-white bg-orange-500 rounded-r-3xl border border-orange-500 hover:bg-orange-400  "
-          >
-            <svg
-              className="w-4 h-4"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 20 20"
+
+          <Link to="search">
+            <button
+              type="submit"
+              className="absolute top-0 right-0 p-2.5 text-sm font-medium h-full text-white bg-orange-500 rounded-r-3xl border border-orange-500 hover:bg-orange-400  "
+              to="/search"
             >
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-              />
-            </svg>
-            <span className="sr-only">Search</span>
-          </button>
+              <svg
+                className="w-4 h-4"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                />
+              </svg>
+              <span className="sr-only">Search</span>
+            </button>
+          </Link>
         </div>
       </div>
     </form>

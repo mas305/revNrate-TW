@@ -45,6 +45,6 @@ export default {
 
       addUtilities(newUtilities, ["responsive", "hover"]);
     },
-    require("@tailwindcss/line-clamp"),
+    // require("@tailwindcss/line-clamp"),
   ],
 };

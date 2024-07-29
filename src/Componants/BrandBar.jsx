@@ -52,11 +52,11 @@ function BrandBar() {
             <BrnadHS
               key={brand.brandId}
               img={brand.logo}
-              onClick={() => navigate("/brand", { state: { brand } })} // pass brand data
+              onClick={() => navigate(`/brand/${brand.brandId}`, { state: { brand } })} // pass brand data
             ></BrnadHS>
           ))
         ) : (
-          <div>No categories available</div>
+          <div>No Brands available</div>
         )}
       </motion.div>
     </motion.div>

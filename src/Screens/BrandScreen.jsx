@@ -32,7 +32,7 @@ import BrandReviewCard from "../Componants/Cards/BrandReviewCard";
 
 function BrandScreen() {
   const { allBrands, brandLoading } = useBrands();
-
+  console.log(allBrands);
   const location = useLocation();
   const { brand } = location.state || {};
 
@@ -85,6 +85,7 @@ function BrandScreen() {
             <PrimaryButton
               className="text-xl lg:text-2xl xl:text-2xl font-bold  md:mt-12"
               name="Add Review"
+              to={`/addbrandreview/${brand.brandId}`}
             ></PrimaryButton>
           </div>
         </div>
@@ -118,7 +119,7 @@ function BrandScreen() {
                 ></Title>
                 <div className="flex items-center font-semibold text-sm lg:text-lg  underline cursor-pointer">
                   <Link
-                    to={"/brandProducts"}
+                    to={`/brandProducts/${brand.brandId}`}
                     className="flex items-center gap-x-1"
                   >
                     <span className="">View More Products</span>
@@ -145,7 +146,7 @@ function BrandScreen() {
                 ></Title>
                 <div className="flex items-center font-semibold text-sm lg:text-lg  underline cursor-pointer">
                   <Link
-                    to={"/brandOffers"}
+                    to={`/brandOffers/${brand.brandId}`}
                     className="flex items-center gap-x-1"
                   >
                     <span className="">View More Offers</span>
@@ -171,7 +172,7 @@ function BrandScreen() {
                 ></Title>
                 <div className="flex items-center font-semibold text-sm lg:text-lg  underline cursor-pointer">
                   <Link
-                    to={"/brandReviews"}
+                    to={`/brandReviews/${brand.brandId}`}
                     className="flex items-center gap-x-1"
                   >
                     <span className="">View More Reviews</span>
@@ -209,7 +210,7 @@ function BrandScreen() {
                     className="text-md xl:text-2xl font-semibold underline text-slate-600 hover:text-blue-900"
                     href=""
                   >
-                    https://karamelsham.org
+                    {brand.websiteLink}
                   </a>
                 </div>
                 <div className="flex gap-3">

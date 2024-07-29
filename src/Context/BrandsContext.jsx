@@ -10,14 +10,12 @@ export function BrandsProvider({ children }) {
 
   useEffect(() => {
     axios({
-      // headers: {
-      //   Authorization: `Bearer ${import.meta.env.VITE_APP_TOKEN}`,
-      // }, 
+
       method: "get",
       url: `${import.meta.env.VITE_APP_MAIN_API_LINK}/api/brands`,
     })
       .then((response) => {
-        // console.log(response.data.Data);
+        console.log(response.data.Data);
         setAllBrands(response.data.Data);
       })
       .catch((error) => {
