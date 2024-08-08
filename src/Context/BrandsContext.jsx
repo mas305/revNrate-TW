@@ -1,21 +1,23 @@
 /* eslint-disable */
 import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const BrandsContext = createContext();
 
 export function BrandsProvider({ children }) {
   const [allBrands, setAllBrands] = useState([]);
-  const [brandLoading, setBrandLoading] = useState(true); // Corrected typo
+  const [brandLoading, setBrandLoading] = useState(true);
+  const [selectedBrandId, setSelectedBrandId] = useState(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios({
-
       method: "get",
       url: `${import.meta.env.VITE_APP_MAIN_API_LINK}/api/brands`,
     })
       .then((response) => {
-        console.log(response.data.Data);
         setAllBrands(response.data.Data);
       })
       .catch((error) => {
@@ -27,14 +29,24 @@ export function BrandsProvider({ children }) {
       });
   }, []);
 
+  const updateBrandId = (id) => {
+    setSelectedBrandId(id);
+    navigate(`/products/brandproducts/${id}`);
+    console.log(id);
+
+    // const getOneBrand =()
+  };
+
   return (
-    <BrandsContext.Provider value={{ allBrands, brandLoading }}>
+    <BrandsContext.Provider
+      value={{ allBrands, brandLoading }}
+    >
       {children}
     </BrandsContext.Provider>
   );
 }
 
-export default function useBrands() { // Changed to `useBrands` for consistency
+export default function useBrands() {
   const context = useContext(BrandsContext);
   if (!context) {
     throw new Error("useBrands must be used within a BrandsProvider");

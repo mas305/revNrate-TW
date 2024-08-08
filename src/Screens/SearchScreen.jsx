@@ -13,13 +13,21 @@ import product3 from "../assets/product3.jpg";
 import product4 from "../assets/product4.jpg";
 import PriceFilter from "../Componants/PriceFilter";
 import Maps from "../Componants/Maps";
+import useBrands from "../Context/BrandsContext";
+import BrnadHS from "../Componants/BrandHS";
 
 function SearchScreen() {
+  const { allBrands, brandLoading } = useBrands();
+  if (brandLoading) {
+    return <div>Loading...</div>;
+  }
+  // console.log(allBrands);
+
   return (
     <div>
       <Header></Header>
 
-      <section className=" mx-24 mt-40 ">
+      <section className="mx-24 mt-40 ">
         <Heading
           className="text-orange-500"
           value1="Top 15 Best Brand"
@@ -37,23 +45,20 @@ function SearchScreen() {
             <div></div>
           </div>
           <div className="col-span-2 grid grid-cols-2 xl:grid-cols-3 gap-8">
-            <ProductsCard img={brand2}></ProductsCard>
-            <ProductsCard img={brand3}></ProductsCard>
-            <ProductsCard img={brand4}></ProductsCard>
-            <ProductsCard img={brand2}></ProductsCard>
-            <ProductsCard img={brand3}></ProductsCard>
-            <ProductsCard img={brand4}></ProductsCard>
-            <ProductsCard img={brand2}></ProductsCard>
-            <ProductsCard img={brand3}></ProductsCard>
-            <ProductsCard img={brand4}></ProductsCard>
-            <ProductsCard img={brand2}></ProductsCard>
-            <ProductsCard img={brand3}></ProductsCard>
-            <ProductsCard img={brand4}></ProductsCard>
+            <div className="col-span-2 grid grid-cols-2 xl:grid-cols-3 gap-5">
+              {allBrands && allBrands.length > 0 ? (
+                allBrands.map((brand) => (
+                  <ProductsCard key={brand.brandId} img={brand.logo} />
+                ))
+              ) : (
+                <div>No Brands available</div>
+              )}
+            </div>
           </div>
         </div>
       </section>
 
-      <section className=" mx-24 mt-40 ">
+      <section className="mx-24 mt-40 ">
         <Heading
           className="text-orange-500"
           value1="Top 15 Best Brand"
@@ -71,18 +76,18 @@ function SearchScreen() {
             <div></div>
           </div>
           <div className="col-span-2 grid grid-cols-2 xl:grid-cols-3 gap-5">
-            <ProductsCard img={product1}></ProductsCard>
-            <ProductsCard img={product3}></ProductsCard>
-            <ProductsCard img={product4}></ProductsCard>
-            <ProductsCard img={product1}></ProductsCard>
-            <ProductsCard img={product3}></ProductsCard>
-            <ProductsCard img={product4}></ProductsCard>
-            <ProductsCard img={product1}></ProductsCard>
-            <ProductsCard img={product3}></ProductsCard>
-            <ProductsCard img={product4}></ProductsCard>
-            <ProductsCard img={product1}></ProductsCard>
-            <ProductsCard img={product3}></ProductsCard>
-            <ProductsCard img={product4}></ProductsCard>
+            <ProductsCard img={brand2}></ProductsCard>
+            <ProductsCard img={brand3}></ProductsCard>
+            <ProductsCard img={brand4}></ProductsCard>
+            <ProductsCard img={brand2}></ProductsCard>
+            <ProductsCard img={brand3}></ProductsCard>
+            <ProductsCard img={brand4}></ProductsCard>
+            <ProductsCard img={brand2}></ProductsCard>
+            <ProductsCard img={brand3}></ProductsCard>
+            <ProductsCard img={brand4}></ProductsCard>
+            <ProductsCard img={brand2}></ProductsCard>
+            <ProductsCard img={brand3}></ProductsCard>
+            <ProductsCard img={brand4}></ProductsCard>
           </div>
         </div>
       </section>

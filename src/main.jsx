@@ -6,6 +6,8 @@ import { RecoilRoot } from "recoil";
 import { BrowserRouter } from "react-router-dom";
 import { CategoriesProvider } from "./Context/CategoriesContext.jsx";
 import { BrandsProvider } from "./Context/BrandsContext.jsx";
+// import { ReviewsProvider } from "./Context/ReviewsContext.jsx";
+import { OffersProvider } from "./Context/OffersContext.jsx";
 import { ReviewsProvider } from "./Context/ReviewsContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
@@ -15,7 +17,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <CategoriesProvider>
           <BrandsProvider>
             <ReviewsProvider>
-              <App />
+              <OffersProvider>
+                <App />
+              </OffersProvider>
             </ReviewsProvider>
           </BrandsProvider>
         </CategoriesProvider>

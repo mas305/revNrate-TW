@@ -1,12 +1,16 @@
 /* eslint-disable */
 
+import { useNavigate } from "react-router-dom";
 import CategoryItem from "../Componants/CategoryItem";
 import Header from "../Componants/Header";
 import Heading from "../Componants/Headnig";
 import useCategories from "../Context/CategoriesContext";
+import Footer from "../Componants/Footer";
+import useReviews from "../Context/ReviewsContext";
 
 function CategoriesScreen() {
   const { allCategories, loading } = useCategories();
+  const navigate = useNavigate();
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -36,14 +40,9 @@ function CategoriesScreen() {
           ) : (
             <div>No categories available</div>
           )}
-          <CategoryItem></CategoryItem>
-          <CategoryItem></CategoryItem>
-          <CategoryItem></CategoryItem>
-          <CategoryItem></CategoryItem>
-          <CategoryItem></CategoryItem>
-          <CategoryItem></CategoryItem>
         </div>
       </div>
+      <Footer></Footer>
     </div>
   );
 }

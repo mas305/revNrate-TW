@@ -1,15 +1,16 @@
 /* eslint-disable */
 import { motion } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
+import classNames from "classnames";
 
 import Heading from "./Headnig";
 
-export default function CategoryItem(props) {
+export default function CategoryItem({ className, img, name, onClick }) {
   const [rotate, setRotate] = useState(false);
   const [inView, setInView] = useState(false);
   const ref = useRef(null);
 
-  useEffect(() => { 
+  useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -39,19 +40,15 @@ export default function CategoryItem(props) {
       animate={{ scale: inView ? 1 : 0 }}
       initial={{ scale: 0 }}
       transition={{ duration: 0.7 }}
-      onClick={() => {
-        setRotate(!rotate);
-      }}
       className="w-full h-28 bg-black shadow-lg rounded-3xl flex justify-center items-center px-6 cursor-pointer"
       style={{
-        backgroundImage: `url(${props.img})`,
+        backgroundImage: `url(${img})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
+      onClick={onClick}
     >
-      <h3 className="text-4xl font-bold tracking-tight text-white">
-        {props.name}
-      </h3>
+      <h3 className="text-4xl font-bold tracking-tight text-white">{name}</h3>
       <div className="w-full"></div>
     </motion.div>
   );

@@ -1,6 +1,7 @@
 /* eslint-disable */
 
 import RevRateLogo from "../assets/logo.svg";
+import user from "../assets/user.png";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import SearchBar from "../Componants/SearchBar.jsx";
@@ -16,6 +17,7 @@ const navigation = [
 ];
 function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
 
   return (
     <header className="absolute bg-slate-100 inset-x-4 top-0 z-50 m-3 rounded-2xl">
@@ -55,12 +57,23 @@ function Header() {
           ))}
         </div>
         <div className="hidden w-auto lg:flex lg:flex-1 lg:justify-end">
-          <Link
-            to={"/login"}
-            className="text-sm font-semibold leading-6 text-white p-2 bg-orange-400 rounded-lg justify-end"
-          >
-            Log in <span aria-hidden="true">&rarr;</span>
-          </Link>
+          {loggedIn ? (
+            <Link to={"/userProfile"}>
+              <img
+                className="h-8 w-8 rounded-full cursor-pointer"
+                to={"/userProfile"}
+                src={user}
+                alt="User Profile"
+              />
+            </Link>
+          ) : (
+            <Link
+              to={"/login"}
+              className="text-sm font-semibold leading-6 text-white p-2 bg-orange-400 rounded-lg justify-end"
+            >
+              Log in <span aria-hidden="true">&rarr;</span>
+            </Link>
+          )}
         </div>
       </nav>
       <Dialog
@@ -98,12 +111,22 @@ function Header() {
                 ))}
               </div>
               <div className="py-6">
-                <Link
-                  to={"/login"}
-                  className="-x-3 block  rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  Log in
-                </Link>
+                {loggedIn ? (
+                  <Link to={"/userProfile"}>
+                    <img
+                      className="h-8 w-8 rounded-full mx-auto"
+                      src={user}
+                      alt="User Profile"
+                    />
+                  </Link>
+                ) : (
+                  <Link
+                    to={"/login"}
+                    className="-x-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  >
+                    Log in
+                  </Link>
+                )}
               </div>
             </div>
           </div>

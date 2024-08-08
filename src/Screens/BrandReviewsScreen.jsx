@@ -29,18 +29,49 @@ import product4 from "../assets/product4.jpg";
 import offer1 from "../assets/offer1.png";
 import offer2 from "../assets/offer2.png";
 import BrandReviewCard from "../Componants/Cards/BrandReviewCard";
+import { useEffect, useState } from "react";
+import axios from "axios";
 function BrandReviewsScreen() {
-  const { allBrands, brandLoading } = useBrands();
-
   const location = useLocation();
+  const [reviews, setReviews] = useState([]);
+  const [reviewsLoading, setReviewsLoading] = useState(true);
   const { brand } = location.state || {};
 
-  if (brandLoading) {
-    return <div>Loading...</div>;
+  const fetchBrandReviews = () => {
+    if (brand && brand.brandId) {
+      axios({
+        headers: {
+          Authorization: `Bearer ${import.meta.env.VITE_APP_TOKEN}`,
+        },
+        method: "get",
+        url: `${
+          import.meta.env.VITE_APP_MAIN_API_LINK
+        }/api/reviews/brandReviews/${brand.brandId}`,
+      })
+        .then((response) => {
+          if (Array.isArray(response.data.Data)) {
+            setReviews(response.data.Data);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching reviews:", error);
+          setReviews([]);
+        })
+        .finally(() => {
+          setReviewsLoading(false);
+        });
+    }
+  };
+
+  useEffect(() => {
+    fetchBrandReviews();
+  }, [brand]);
+
+  // Ensure brand and brand.photos exist before rendering
+  if (!brand) {
+    return <div>No brand data available</div>;
   }
-  //   if (!brand) {
-  //     return <div>No brand data available</div>;
-  // }
+
   return (
     <div className="bg-slate-100">
       <div>
@@ -48,7 +79,7 @@ function BrandReviewsScreen() {
 
         <img
           className="w-full h-72  md:h-96 lg:h-530px xl:h-530px object-cover"
-          src={category1}
+          src={brand.photos}
           alt=""
         />
         {/* Brand Name & Logo  */}
@@ -58,7 +89,7 @@ function BrandReviewsScreen() {
             <div
               className="w-36 h-36 lg:w-64 lg:h-64 md:w-48 md:h-48 rounded-full bg-white"
               style={{
-                backgroundImage: `url(${brand2})`,
+                backgroundImage: `url(${brand.logo})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
               }}
@@ -100,20 +131,26 @@ function BrandReviewsScreen() {
               <div className="flex items-end justify-between">
                 <Title
                   className="text-xl md:text-3xl xl:text-4xl font-bold"
-                  title="Products"
+                  title="Reviews"
                 ></Title>
               </div>
 
               <hr className="h-0.5 my-2 bg-black" />
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3    gap-10 ">
-                <BrandReviewCard></BrandReviewCard>
-                <BrandReviewCard></BrandReviewCard>
-                <BrandReviewCard></BrandReviewCard>
-                <BrandReviewCard></BrandReviewCard>
-                <BrandReviewCard></BrandReviewCard>
-                <BrandReviewCard></BrandReviewCard>
-                <BrandReviewCard></BrandReviewCard>
-              </div>
+              {reviews.length === 0 ? (
+                <div className="text-lg text-center py-4">
+                  No available reviews
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10">
+                  {reviews.map((review) => (
+                    <BrandReviewCard
+                      key={review.reviewId}
+                      content={review.comments}
+                      reviewerName={review.photos[1]}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
           </div>
 

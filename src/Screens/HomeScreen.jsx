@@ -28,6 +28,9 @@ import useCategories from "../Context/CategoriesContext.jsx";
 import useBrands from "../Context/BrandsContext.jsx";
 import OfferCard from "../Componants/Cards/OfferCard.jsx";
 import Footer from "../Componants/Footer.jsx";
+import { useNavigate } from "react-router-dom";
+import useOffers from "../Context/OffersContext.jsx";
+import useReviews from "../Context/ReviewsContext.jsx";
 
 const navigation = [
   { name: "Product", href: "#" },
@@ -40,12 +43,17 @@ export default function HomeScreen() {
   // const [categories, setCategories] = useRecoilState(categoriesState);
   const { allCategories, loading } = useCategories();
   const { allBrands, brandLoading } = useBrands();
+  const { allOffers, offersLoading } = useOffers();
+  const { popularReviews, popularReviewsloading } = useReviews();
+  const navigate = useNavigate();
 
   // const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  if (loading || brandLoading) {
+  if (loading || brandLoading || offersLoading || popularReviewsloading) {
     return <div>Loading...</div>;
   }
+
+  // console.log(popularReviews);
 
   return (
     <>
@@ -88,6 +96,11 @@ export default function HomeScreen() {
                 key={category.categoryId}
                 name={category.categoryName}
                 img={category.categoryPic}
+                onClick={() =>
+                  navigate(`/getonecategory/${category.categoryId}`, {
+                    state: { category },
+                  })
+                }
               />
             ))
           ) : (
@@ -119,17 +132,24 @@ export default function HomeScreen() {
         <Heading
           value1="Offers"
           value2="show all offers"
-          to={"/categories"}
+          to={"/Offers"}
           className="my-8 text-orange-500"
         />
 
         <div className="h-full w-full grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-9 mb-60">
+          {allOffers && allOffers.length > 0 ? (
+            allOffers.map((offer) => (
+              <OfferCard
+                key={offer.offersId}
+                offer={offer}
+                allBrands={allBrands}
+              />
+            ))
+          ) : (
+            <div>No Offers available</div>
+          )}
+
           <OfferCard img={offer1}></OfferCard>
-          <OfferCard img={offer2}></OfferCard>
-          <OfferCard img={offer1}></OfferCard>
-          <OfferCard img={offer2}></OfferCard>
-          <OfferCard img={offer1}></OfferCard>
-          <OfferCard img={offer2}></OfferCard>
         </div>
       </div>
 
@@ -139,23 +159,27 @@ export default function HomeScreen() {
           value1="Popular Reviews"
           value2="show all Reviews"
           className="my-8 text-orange-500"
+          to={"/Reviews"}
         />
 
         <div className="h-full w-full grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 md:grid-cols-2  gap-9 mb-12">
-          <ReviewCard />
-          <ReviewCard />
-          <ReviewCard />
-          <ReviewCard />
-          <ReviewCard />
-          <ReviewCard />
-          <ReviewCard />
-          <ReviewCard />
+          {popularReviews && popularReviews.length > 0 ? (
+            popularReviews.map((review) => (
+              <ReviewCard
+                key={review.reviewId}
+                content={review.comments}
+                rete={review.quality}
+                date={review.date}
+              />
+            ))
+          ) : (
+            <div>No Offers available</div>
+          )}
         </div>
       </div>
 
       <Footer></Footer>
 
-      {/* <div className="w-full h-screen"></div> */}
     </>
   );
 }

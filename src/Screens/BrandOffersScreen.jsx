@@ -28,18 +28,52 @@ import product3 from "../assets/product3.jpg";
 import product4 from "../assets/product4.jpg";
 import offer1 from "../assets/offer1.png";
 import offer2 from "../assets/offer2.png";
+import { useEffect, useState } from "react";
+import axios from "axios";
 function BrandOffersScreen() {
   const { allBrands, brandLoading } = useBrands();
 
   const location = useLocation();
   const { brand } = location.state || {};
+  const [offers, setOffers] = useState([]); // Ensure initial state is an array
+  const [offersLoading, setOffersLoading] = useState(true);
+  const BrandOffers = () => {
+    if (brand && brand.brandId) {
+      axios({
+        headers: {
+          Authorization: `Bearer ${import.meta.env.VITE_APP_TOKEN}`,
+        },
+        method: "get",
+        url: `${
+          import.meta.env.VITE_APP_MAIN_API_LINK
+        }/api/offers/brandoffers/${brand.brandId}`,
+      })
+        .then((response) => {
+          if (Array.isArray(response.data.data)) {
+            setOffers(response.data.data);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching offers:", error);
+          setOffers([]);
+        })
+        .finally(() => {
+          setOffersLoading(false);
+        });
+    }
+  };
+  useEffect(() => {
+    BrandOffers();
+  }, [brand]);
 
-  if (brandLoading) {
+  if (brandLoading || offersLoading) {
     return <div>Loading...</div>;
   }
-  //   if (!brand) {
-  //     return <div>No brand data available</div>;
-  // }
+
+  if (!brand) {
+    return <div>No brand data available</div>;
+  }
+
   return (
     <div className="bg-slate-100">
       <div>
@@ -47,7 +81,7 @@ function BrandOffersScreen() {
 
         <img
           className="w-full h-72  md:h-96 lg:h-530px xl:h-530px object-cover"
-          src={category1}
+          src={brand.photos}
           alt=""
         />
         {/* Brand Name & Logo  */}
@@ -57,7 +91,7 @@ function BrandOffersScreen() {
             <div
               className="w-36 h-36 lg:w-64 lg:h-64 md:w-48 md:h-48 rounded-full bg-white"
               style={{
-                backgroundImage: `url(${brand2})`,
+                backgroundImage: `url(${brand.logo})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
               }}
@@ -65,7 +99,7 @@ function BrandOffersScreen() {
             <div className="flex flex-col items-start justify-center mx-4 mt-0 md:mt-10  ">
               <Heading
                 className="text-orange-500 my-3"
-                value1="Karam Elsham"
+                value1={brand.brandName}
               ></Heading>
               <div className="w-full flex   ">
                 <BrandState
@@ -99,28 +133,23 @@ function BrandOffersScreen() {
               <div className="flex items-end justify-between">
                 <Title
                   className="text-xl md:text-3xl xl:text-4xl font-bold"
-                  title="Products"
+                  title="Offers"
                 ></Title>
               </div>
 
               <hr className="h-1 my-2 bg-black" />
               <div className="grid grid-cols-1 md:grid-cols-2   gap-10 ">
-                <OfferCard img={offer1}></OfferCard>
-                <OfferCard img={offer2}></OfferCard>
-                <OfferCard img={offer2}></OfferCard>
-                <OfferCard img={offer1}></OfferCard>
-                <OfferCard img={offer1}></OfferCard>
-                <OfferCard img={offer2}></OfferCard>
-                <OfferCard img={offer1}></OfferCard>
-                <OfferCard img={offer2}></OfferCard>
-                <OfferCard img={offer1}></OfferCard>
-                <OfferCard img={offer2}></OfferCard>
-                <OfferCard img={offer2}></OfferCard>
-                <OfferCard img={offer1}></OfferCard>
-                <OfferCard img={offer1}></OfferCard>
-                <OfferCard img={offer2}></OfferCard>
-                <OfferCard img={offer1}></OfferCard>
-                <OfferCard img={offer2}></OfferCard>
+                {offers && offers.length > 0 ? (
+                  offers.map((offer) => (
+                    <OfferCard
+                      key={offer.offersId}
+                      offer={offer}
+                      allBrands={allBrands}
+                    />
+                  ))
+                ) : (
+                  <div>No Offers available</div>
+                )}
               </div>
             </div>
           </div>
@@ -143,7 +172,7 @@ function BrandOffersScreen() {
                     className="text-md xl:text-2xl font-semibold underline text-slate-600 hover:text-blue-900"
                     href=""
                   >
-                    https://karamelsham.org
+                    {brand.websiteLink}
                   </a>
                 </div>
                 <div className="flex gap-3">

@@ -9,7 +9,7 @@ export default function PrimaryButton({ className, name, to }) {
     if (to) {
       navigate(to);
     }
-  };
+  };  
 
   return (
     <div className="w-full">

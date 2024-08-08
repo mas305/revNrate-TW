@@ -1,12 +1,9 @@
 /* eslint-disable */
 
-export default function Links(props) {
+export default function Links({ value, to }) {
   return (
-    <a
-      href="{SignupScreen}"
-      className="font-semibold leading-6 px-1 text-orange-500 hover:text-orange-600 cursor-pointer"
-    >
-      {props.value}
-    </a>
+    <span className="font-semibold leading-6 px-1 text-orange-500 hover:text-orange-600 cursor-pointer">
+      {value}
+    </span>
   );
 }

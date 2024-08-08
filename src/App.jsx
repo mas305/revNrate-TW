@@ -2,7 +2,7 @@
 
 import { createContext, useEffect, useState } from "react";
 import "./App.css";
-
+import { BrowserRouter as Router } from "react-router-dom";
 import Animation from "./Componants/Animation";
 import SearchBar from "./Componants/SearchBar";
 import HomeScreen from "./Screens/HomeScreen";
@@ -23,6 +23,11 @@ import BrandReviewsScreen from "./Screens/BrandReviewsScreen";
 import AddReviewScreen from "./Screens/AddReviewScreen";
 import SearchScreen from "./Screens/SearchScreen";
 import OneCategoryScreen from "./Screens/OneCategoryScreen";
+import OffersScreen from "./Screens/OffersScreen";
+import ReviewsScreen from "./Screens/ReviewsScreen";
+import EditProfileScreen from "./Screens/EditProfileScreen";
+import ProfileDataForm from "./Componants/ProfileDataForm";
+import ProfileUserScreen from "./Screens/ProfileUserScreen";
 
 function App() {
   const [allCategories, setAllCategories] = useState([]);
@@ -35,15 +40,25 @@ function App() {
         {/* <Route path="/" element={<HomeScreen />} /> */}
         <Route path="/signup" element={<SignupScreen />} />
         <Route path="/categories" element={<CategoriesScreen />} />
+        <Route path="/Reviews" element={<ReviewsScreen />} />
+        <Route path="/Offers" element={<OffersScreen />} />
         <Route path="/brand" element={<BrandScreen />} />
         <Route path="/brand/:brandId" element={<BrandScreen />} />
-        <Route path="/getonecategory/:categoryId" element={<OneCategoryScreen />} />
-        <Route path="/brandProducts" element={<BrandProductsScreen />} />
-        <Route path="/brandOffers" element={<BrandOffersScreen />} /> 
-        <Route path="/brandReviews/:brandId" element={<BrandReviewsScreen />} /> 
+        <Route path="/editProfile" element={<EditProfileScreen />} />
+        <Route
+          path="/getonecategory/:categoryId"
+          element={<OneCategoryScreen />}
+        />
+        <Route
+          path="/brandProducts/:brandId"
+          element={<BrandProductsScreen />}
+        />
+        <Route path="/userProfile" element={<ProfileUserScreen />} />
+        <Route path="/brandOffers/:bandId" element={<BrandOffersScreen />} />
+        <Route path="/brandReviews/:brandId" element={<BrandReviewsScreen />} />
         <Route path="/brands" element={<BrandsScreen />} />
-        <Route path="/addbrandreview/:brandId" element={<AddReviewScreen />} /> 
-        <Route path="/search" element={<SearchScreen />} /> 
+        <Route path="/addbrandreview/:brandId" element={<AddReviewScreen />} />
+        <Route path="/search" element={<SearchScreen />} />
       </Routes>
     </>
   );

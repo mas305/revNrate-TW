@@ -1,66 +1,49 @@
 /* eslint-disable */
+import { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
-import { createContext, useContext, useEffect, useState } from "react";
-import useBrands from "./BrandsContext";
 
+// Create the context
 const ReviewsContext = createContext();
 
+// Create a provider component
 export function ReviewsProvider({ children }) {
-  const [allReviews, setAllReviews] = useState([]);
-  const [reviewLoading, setReviewLoading] = useState(true);
-  const { allBrands, brandLoading } = useBrands();
+  const [popularReviews, setPopularReviews] = useState([]);
+  const [popularReviewsloading, setPopularReviewsLoading] = useState(true);
+
+  //   console.log("API Link:", import.meta.env.VITE_APP_MAIN_API_LINK);
+  //   console.log("Token:", import.meta.env.VITE_APP_TOKEN);
 
   useEffect(() => {
-    console.log("allBrands updated:", allBrands);
-    if (!brandLoading) {
-      getBrandReviews();
-    }
-  }, [allBrands, brandLoading]);
-
-  const getBrandReviews = () => {
-    if (!allBrands || !allBrands.brandId) {
-      console.error("Brand ID is missing or invalid");
-      setReviewLoading(false);
-      return;
-    }
-
-    const url = `${
-      import.meta.env.VITE_APP_MAIN_API_LINK
-    }/api/reviews/brandreviews/${allBrands.brandId}`;
-    console.log("Fetching reviews from URL:", url);
-
     axios({
-      method: "get",
-      url,
       headers: {
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzE5MzA5MjU2LCJleHAiOjIzMjQxMDkyNTZ9.tQ0ZvbLpxmyZZWZlsvwN_I4XdCiCemaYZYOBq3cBPRs",
+        Authorization: `Bearer ${import.meta.env.VITE_APP_TOKEN}`,
       },
+      method: "get",
+      url: `${
+        import.meta.env.VITE_APP_MAIN_API_LINK
+      }/api/reviews/popularreviews`,
     })
       .then((response) => {
-        console.log(response.data.Data);
-        setAllReviews(response.data.Data);
+        // console.log(response.data.data);
+        setPopularReviews(response.data.data);
       })
       .catch((error) => {
-        console.error("Error fetching review:", error);
-        setAllReviews([]);
+        console.error("Error fetching Popular Reviews:", error);
+        setPopularReviews([]);
       })
       .finally(() => {
-        setReviewLoading(false);
+        setPopularReviewsLoading(false);
       });
-  };
-
-  if (brandLoading) {
-    return <div>Loading...</div>;
-  }
+  }, []);
 
   return (
-    <ReviewsContext.Provider value={{ allReviews, reviewLoading }}>
+    <ReviewsContext.Provider value={{ popularReviews, popularReviewsloading }}>
       {children}
     </ReviewsContext.Provider>
   );
 }
 
+// Custom hook to use the OffersContext
 export default function useReviews() {
   const context = useContext(ReviewsContext);
   if (!context) {

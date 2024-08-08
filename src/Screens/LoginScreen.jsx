@@ -6,6 +6,7 @@ import gmailImage from "../assets/gmail.png";
 import apple_logo from "../assets/apple-logo.png";
 import facebook from "../assets/facebook.png";
 import homeImage from "../assets/home.jpg";
+import brand1 from "../assets/image1.jpg";
 import PrimaryButton from "../Componants/PrimaryButton";
 import SignupScreen from "./SignupScreen";
 import Links from "../Componants/Links";
@@ -14,8 +15,8 @@ import { Link } from "react-router-dom";
 export default function LoginScreen() {
   return (
     <>
-      <div className="grid max-w-full min-h-screen  grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 justify-center ">
-        <div className="home__data max-w-full">
+      <div className="grid max-w-full min-h-screen grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 justify-center ">
+        <div className="home__data flex flex-col items-center justify-center max-w-full mx-12 my-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             <img
               className="mx-auto h-32 w-auto"
@@ -27,7 +28,7 @@ export default function LoginScreen() {
             </h2>
           </div>
 
-          <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+          <div className="mt-10 w-full lg:px-12">
             <form className="space-y-6" action="#" method="POST">
               <div>
                 <label
@@ -77,49 +78,19 @@ export default function LoginScreen() {
             </form>
 
             <p className="mt-10 text-center text-sm text-gray-500">
-              Don't hava an account ?<Link to={'/signup'}><Links value="sign up"></Links></Link>
+              Don't hava an account ?
+              <Link to="/signup">
+                <Links value="Sign up" />
+              </Link>
             </p>
-            <div className="flex justify-center items-center">
-              <div className="w-12 h-0.5 bg-slate-400"></div>
-              <p className="m-3 text-slate-600">or login with</p>
-              <div className="w-12 h-0.5 bg-slate-400"></div>
-            </div>
-
-            <div className="bg-white">
-              <div className="mx-auto px-6 lg:px-8">
-                <div className="mx-auto mt-10 grid max-w-lg grid-cols-3 justify-center items-center gap-x-8 gap-y-10">
-                  <img
-                    className="col-span-2 max-h-12 w-full object-contain lg:col-span-1 cursor-pointer"
-                    src={gmailImage}
-                    alt="Transistor"
-                    width={158}
-                    height={48}
-                  />
-                  <img
-                    className="col-span-2 max-h-12 w-full object-contain lg:col-span-1 cursor-pointer"
-                    src={facebook}
-                    alt="Reform"
-                    width={158}
-                    height={48}
-                  />
-                  <img
-                    className="col-span-2 max-h-12 w-full object-contain lg:col-span-1 cursor-pointer"
-                    src={apple_logo}
-                    alt="Tuple"
-                    width={158}
-                    height={48}
-                  />
-                </div>
-              </div>
-            </div>
           </div>
         </div>
         <div
-          className="home__img max-h-full"
+          className="home__img hidden sm:flex max-h-full"
           style={{
-            backgroundImage: `url(${homeImage})`,
+            backgroundImage: `url(${brand1})`,
             backgroundSize: "cover",
-            backgroundPosition: "center",
+            backgroundPosition: "right",
           }}
         ></div>
       </div>

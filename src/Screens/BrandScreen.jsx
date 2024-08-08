@@ -29,15 +29,115 @@ import product4 from "../assets/product4.jpg";
 import offer1 from "../assets/offer1.png";
 import offer2 from "../assets/offer2.png";
 import BrandReviewCard from "../Componants/Cards/BrandReviewCard";
+import useReviews from "../Context/ReviewsContext";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 function BrandScreen() {
   const { allBrands, brandLoading } = useBrands();
-  console.log(allBrands);
+  const { allReviews, reviewLoading } = useReviews();
   const location = useLocation();
-  const { brand } = location.state || {};
+  const [products, setProducts] = useState([]);
+  const [productsLoading, setProductsLoading] = useState(true);
+  const [reviews, setReviews] = useState([]);
+  const [reviewsLoading, setReviewsLoading] = useState(true);
+  const [offers, setOffers] = useState([]);
+  const [offersLoading, setOffersLoading] = useState(true);
+  const { brand, offer } = location.state || {};
 
-  if (brandLoading) {
+  const BrandReviews = () => {
+    if (brand && brand.brandId) {
+      axios({
+        headers: {
+          Authorization: `Bearer ${import.meta.env.VITE_APP_TOKEN}`,
+        },
+        method: "get",
+        url: `${
+          import.meta.env.VITE_APP_MAIN_API_LINK
+        }/api/reviews/brandReviews/${brand.brandId}`,
+      })
+        .then((response) => {
+          if (Array.isArray(response.data.Data)) {
+            setReviews(response.data.Data);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching reviews:", error);
+          setReviews([]);
+        })
+        .finally(() => {
+          setReviewsLoading(false);
+        });
+    }
+  };
+
+  const BrandProducts = () => {
+    if (brand && brand.brandId) {
+      axios({
+        method: "get",
+        url: `${
+          import.meta.env.VITE_APP_MAIN_API_LINK
+        }/api/products/brandproducts/${brand.brandId}`,
+      })
+        .then((response) => {
+          if (Array.isArray(response.data.data)) {
+            setProducts(response.data.data);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching products:", error);
+          setProducts([]);
+        })
+        .finally(() => {
+          setProductsLoading(false);
+        });
+    }
+  };
+
+  const BrandOffers = () => {
+    if (brand && brand.brandId) {
+      axios({
+        headers: {
+          Authorization: `Bearer ${import.meta.env.VITE_APP_TOKEN}`,
+        },
+        method: "get",
+        url: `${
+          import.meta.env.VITE_APP_MAIN_API_LINK
+        }/api/offers/brandoffers/${brand.brandId}`,
+      })
+        .then((response) => {
+          if (Array.isArray(response.data.data)) {
+            setOffers(response.data.data);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching offers:", error);
+          setOffers([]);
+        })
+        .finally(() => {
+          setOffersLoading(false);
+        });
+    }
+  };
+  // console.log(reviews);
+
+  useEffect(() => {
+    BrandProducts();
+    BrandOffers();
+    BrandReviews();
+  }, [brand]);
+
+  if (brandLoading || reviewLoading) {
     return <div>Loading...</div>;
+  }
+
+  if (!brand) {
+    return (
+      <div>
+        <div>No brand data available</div>
+        <div>{offer.brandId}</div>
+      </div>
+    );
   }
 
   return (
@@ -101,13 +201,7 @@ function BrandScreen() {
                 title="About"
               ></Title>
               <hr className="h-0.5 my-2  bg-black" />
-              <p className="lg:text-2xl sm:text-lg">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Voluptatem architecto harum eveniet. Assumenda, veritatis
-                accusantium voluptatum dignissimos minus iure, quaerat
-                consequatur facere at, quidem beatae eius magni dolorem
-                asperiores aliquid.
-              </p>
+              <p className="lg:text-2xl sm:text-lg">{brand.detail}</p>
             </div>
             {/* Products */}
             <div className="w-full">
@@ -120,6 +214,7 @@ function BrandScreen() {
                 <div className="flex items-center font-semibold text-sm lg:text-lg  underline cursor-pointer">
                   <Link
                     to={`/brandProducts/${brand.brandId}`}
+                    state={{ brand }}
                     className="flex items-center gap-x-1"
                   >
                     <span className="">View More Products</span>
@@ -131,10 +226,20 @@ function BrandScreen() {
               </div>
 
               <hr className="h-0.5 my-2 bg-black" />
-              <div className="grid grid-cols-1 md:grid-cols-2   gap-10 ">
-                <ProductsCard img={product1}></ProductsCard>
-                <ProductsCard img={product2}></ProductsCard>
-              </div>
+              {products.length === 0 ? (
+                <div className="text-lg text-center py-4">
+                  No available products
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10">
+                  {products.map((product) => (
+                    <ProductsCard
+                      key={product.productId}
+                      img={product.photos}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
             {/* Offers */}
             <div className="w-full">
@@ -147,6 +252,7 @@ function BrandScreen() {
                 <div className="flex items-center font-semibold text-sm lg:text-lg  underline cursor-pointer">
                   <Link
                     to={`/brandOffers/${brand.brandId}`}
+                    state={{ brand }}
                     className="flex items-center gap-x-1"
                   >
                     <span className="">View More Offers</span>
@@ -157,10 +263,17 @@ function BrandScreen() {
                 </div>
               </div>
               <hr className="h-0.5 my-2 bg-black" />
-              <div className="grid grid-cols-1 md:grid-cols-2  gap-10 ">
-                <OfferCard img={offer1}></OfferCard>
-                <OfferCard img={offer2}></OfferCard>
-              </div>
+              {offers.length === 0 ? (
+                <div className="text-lg text-center py-4">
+                  No available offers
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10">
+                  {offers.map((offer) => (
+                    <OfferCard key={offer.offersId} img={offer.photo} />
+                  ))}
+                </div>
+              )}
             </div>
             {/* ReviewCard */}
             <div className="w-full">
@@ -173,6 +286,7 @@ function BrandScreen() {
                 <div className="flex items-center font-semibold text-sm lg:text-lg  underline cursor-pointer">
                   <Link
                     to={`/brandReviews/${brand.brandId}`}
+                    state={{ brand }}
                     className="flex items-center gap-x-1"
                   >
                     <span className="">View More Reviews</span>
@@ -184,11 +298,21 @@ function BrandScreen() {
               </div>
 
               <hr className="h-0.5  my-2 bg-black" />
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10 ">
-                <BrandReviewCard></BrandReviewCard>
-                <BrandReviewCard></BrandReviewCard>
-                <BrandReviewCard></BrandReviewCard>
-              </div>
+              {reviews.length === 0 ? (
+                <div className="text-lg text-center py-4">
+                  No available reviews
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10">
+                  {reviews.map((review) => (
+                    <BrandReviewCard
+                      key={review.reviewId}
+                      content={review.comments}
+                      reviewerName={review.photos[1]}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
           </div>
 

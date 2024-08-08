@@ -8,16 +8,16 @@ import useCategories from "../Context/CategoriesContext";
 import OfferCard from "../Componants/Cards/OfferCard";
 import offer1 from "../assets/offer1.png";
 import offer2 from "../assets/offer2.png";
-import ReviewCard from "../Componants/Cards/ReviewCard";
 import Footer from "../Componants/Footer";
-import useReviews from "../Context/ReviewsContext";
+import useOffers from "../Context/OffersContext";
+import useBrands from "../Context/BrandsContext";
 
-function ReviewsScreen() {
-  const { allCategories, loading } = useCategories();
-  const { popularReviews, popularReviewsloading } = useReviews();
+function OffersScreen() {
+  const { allOffers, offersLoading } = useOffers();
+  const { allBrands, brandLoading } = useBrands();
 
   const navigate = useNavigate();
-  if (loading || popularReviewsloading) {
+  if (offersLoading || brandLoading) {
     return <div>Loading...</div>;
   }
   return (
@@ -26,22 +26,22 @@ function ReviewsScreen() {
       <div className="mx-12 h-auto">
         <Heading
           className="mt-28 my-8 text-orange-500"
-          value1="Reviews"
+          value1="Offers"
         ></Heading>
 
-        <div className="h-full w-full grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-9 mb-60">
-          {popularReviews && popularReviews.length > 0 ? (
-            popularReviews.map((review) => (
-              <ReviewCard
-                key={review.reviewId}
-                content={review.comments}
-                rete={review.quality}
-                date={review.date}
+        <div className="h-full w-full grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-9 mb-60">
+          {allOffers && allOffers.length > 0 ? (
+            allOffers.map((offer) => (
+              <OfferCard
+                key={offer.offersId}
+                offer={offer}
+                allBrands={allBrands}
               />
             ))
           ) : (
             <div>No Offers available</div>
           )}
+          <OfferCard img={offer2}></OfferCard>
         </div>
       </div>
       <Footer></Footer>
@@ -49,4 +49,4 @@ function ReviewsScreen() {
   );
 }
 
-export default ReviewsScreen;
+export default OffersScreen;
